@@ -14,6 +14,11 @@ const users = require("../database/users");
 const app = express();
 app.use(express.json());
 
+// Root route for homepage
+app.get("/", (req, res) => {
+  res.send("Welcome to the In-n-Out Books API 🎉");
+});
+
 // GET all books
 app.get("/api/books", async (req, res) => {
   try {
