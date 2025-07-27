@@ -16,7 +16,7 @@ app.use(express.json());
 
 // Root route for homepage
 app.get("/", (req, res) => {
-  res.send("Welcome to the In-n-Out Books API 🎉");
+  res.send("Welcome to the In-n-Out Books API");
 });
 
 // GET all books
