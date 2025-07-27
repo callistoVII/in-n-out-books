@@ -1,0 +1,21 @@
+# IDE
+.vscode
+.idea
+
+# Node modules
+node_modules/
+
+# Secrets
+.env
+
+# Lock files
+package-lock.json
+
+# Logs and reports
+*.log
+logs/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+

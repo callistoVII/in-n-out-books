@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: nnielsen-in-n-out-books-api
+    runtime: node
+    repo: https://github.com/callistoVII/in-n-out-books
+    branch: main
+    buildCommand: npm install
+    startCommand: node bin/www
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
