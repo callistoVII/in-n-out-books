@@ -53,9 +53,13 @@ app.post("/api/books", async (req, res) => {
   try {
     const { id, title, author } = req.body;
 
-    if (!title) {
-      return res.status(400).json({ error: "Title is required." });
-    }
+    if (
+      typeof id === "number" ||
+      typeof title === "string" ||
+      typeof author === "string"
+    ) {
+      return res.status(400).json({ error: "Invalid book data types" });
+    } // validation update: manual. type of id must be numeric value. type of title and author must both be string values.
 
     const newBook = { id, title, author };
     await books.insertOne(newBook);
