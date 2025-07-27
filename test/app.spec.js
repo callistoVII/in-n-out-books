@@ -65,7 +65,32 @@ describe("Chapter 4: API Tests", () => {
 
     expect(res.statusCode).toBe(400);
     expect(res.body).toHaveProperty("error");
-    expect(res.body.error).toMatch(/title is required/i);
+    expect(res.body.error).toMatch(/missing required fields/i);
+  });
+
+  it("should return a 400-status code when adding a book missing all required fields", async () => {
+    const res = await request(app).post("/api/books").send({}); // empty body
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toMatch(/missing required fields/i);
+  });
+
+  it("should return a 400-status code when adding a book with invalid data types", async () => {
+    const res = await request(app)
+      .post("/api/books")
+      .send({ id: "not-a-number", title: 42, author: false });
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toMatch(/invalid book data types/i);
+  });
+
+  it("should return a 400-status code when title or author is an empty string", async () => {
+    const res = await request(app)
+      .post("/api/books")
+      .send({ id: 8, title: "", author: "" });
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toMatch(/cannot be empty/i);
   });
 
   it("should return a 204-status code when deleting a book", async () => {

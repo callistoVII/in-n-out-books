@@ -16,7 +16,7 @@ app.use(express.json());
 
 // Root route for homepage
 app.get("/", (req, res) => {
-  res.send("Welcome to the In-n-Out Books API");
+  res.send("Welcome to the In-n-Out Books API!");
 });
 
 // GET all books
@@ -53,13 +53,25 @@ app.post("/api/books", async (req, res) => {
   try {
     const { id, title, author } = req.body;
 
+    if (id === undefined || title === undefined || author === undefined) {
+      return res.status(400).json({
+        error:
+          "Missing required fields: id, title, and author are all required.",
+      });
+    } // validation update: error for missing fields.
     if (
-      typeof id === "number" ||
-      typeof title === "string" ||
-      typeof author === "string"
+      typeof id !== "number" ||
+      typeof title !== "string" ||
+      typeof author !== "string"
     ) {
-      return res.status(400).json({ error: "Invalid book data types" });
+      return res.status(400).json({ error: "Invalid book data types." });
     } // validation update: manual. type of id must be numeric value. type of title and author must both be string values.
+
+    if (title.trim() === "" || author.trim() === "") {
+      return res
+        .status(400)
+        .json({ error: "Title and author cannot be empty." });
+    }
 
     const newBook = { id, title, author };
     await books.insertOne(newBook);
